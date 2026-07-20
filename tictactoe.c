@@ -14,7 +14,7 @@ int main()
   int mat[3][3];
   char confirm;
   int usr1Col, usr1Row, usr2Col, usr2Row;
-  int i, j, k, count;
+  int i, j, count;
   int winner;
   do 
   {
@@ -40,32 +40,32 @@ int main()
         {
           do 
           {
-            printf("Jogador 1, insiria a linha de sua jogada: ");
+            printf("Player 1, insert the row that you want to place your number: ");
             scanf("%d", &usr1Row);
             if(usr1Row < 1 || usr1Row > 3)
             {
-               printf("Linha inválida, insira uma linha contida em [1,3].\n");
+               printf("Invalid row, insert a row between 1 and 3.\n");
             }
           }while(usr1Row < 1 || usr1Row > 3);
 
           do 
           {
-            printf("Jogador 1, insira a coluna de sua jogada: ");
+            printf("Player 1, insert the column that you want to place your number: ");
             scanf("%d", &usr1Col);
             if(usr1Col < 1 || usr1Col > 3)
             {
-              printf("Coluna inválida, digite um número no intervalo [1,3].\n");
+              printf("Invalid column, insert a number between 1 and 3.\n");
             }
           }while(usr1Col < 1 || usr1Col > 3);
 
           if(mat[usr1Row-1][usr1Col-1] != 0)
           {
-            printf("Jogada inválida, digite uma coordenada que ainda não foi ocupada.\n");
+            printf("Invalid play, place your number where there's zeros.\n");
             valid = false;
           }
           else
           {
-            mat[usr1Row-1][usr1Col-1] = 1; // recebe jogador 1.
+            mat[usr1Row-1][usr1Col-1] = 1;
             valid = true;
           }
         }while(!valid);
@@ -76,32 +76,32 @@ int main()
         {
           do 
           {
-            printf("Jogador 2, insiria a linha de sua jogada: ");
+            printf("Player 2, insert the column that you want to place your number: ");
             scanf("%d", &usr2Row);
             if(usr2Row < 1 || usr2Row > 3)
             {
-              printf("Linha inválida, insira uma linha contida em [1,3].\n");
+              printf("Invalid row, insert a row between 1 and 3.\n");
             }
           }while(usr2Row < 1 || usr2Row > 3);
 
           do 
           {
-            printf("Jogador 2, insira a coluna de sua jogada: ");
+            printf("Player 2, insert the column that you want to place your number: ");
             scanf("%d", &usr2Col);
             if(usr2Col < 1 || usr2Col > 3)
             {
-              printf("Coluna inválida, digite um número no intervalo [1,3].\n");
+              printf("Invalid column, insert a number between 1 and 3.\n");
             }
           }while(usr2Col < 1 || usr2Col > 3);
 
           if(mat[usr2Row-1][usr2Col-1] != 0)
           {
-            printf("Jogada inválida, digite uma coordenada que ainda não foi ocupada.\n");
+            printf("Invalid play, place your number where there's zeros.\n");
             valid = false;
           }
           else
           {
-            mat[usr2Row-1][usr2Col-1] = 2; // recebe jogador 2.
+            mat[usr2Row-1][usr2Col-1] = 2;
             valid = true;
           }
 
@@ -121,26 +121,34 @@ int main()
     printMatQuad(3,mat);
     if(winner != 0)
     {
-      printf("O jogador %d foi o ganhador!!\n", winner);
+      printf("Player %d has won!!\n", winner);
     }
     else 
     {
-      printf("Nenhum jogador ganhou!\n");
+      printf("Nobody won!\n");
     }
 
     __fpurge(stdin);
-    printf("Deseja reexecutar o algorimo? (y/n)");
+    printf("Wants to play again? (y/n)");
     scanf(" %c", &confirm);
   } while(confirm == 'y' || confirm == 'Y');
 
   return 0;
 }
 
+// Simple print for 
 void printMatQuad(int n, int mat[n][n])
 {
   int i, j;
+  
+  // Making the header
+  printf("\t");
+  for(i=1;i <= n; i++)
+  {
+    printf("%2d\t", i);
+  }
+  printf("\n");
 
-  printf("\t 1\t 2\t 3\n");
   for(i=0; i<n; i++)
   {
     printf("%d:\t", i+1);
@@ -151,6 +159,8 @@ void printMatQuad(int n, int mat[n][n])
     printf("\n");
   }
 }
+// Verify every case using smaller functions below. It's the best thing i could
+// think to verify if somebody has won.
 int whoWon(int n, int mat[n][n])
 {
   int winner;
@@ -184,6 +194,7 @@ int whoWon(int n, int mat[n][n])
     }
   }
 }
+// checks if numbers at the same row are equals.
 int verifyRow(int n, int mat[n][n])
 {
   int i, j, valid = 0;
@@ -209,6 +220,7 @@ int verifyRow(int n, int mat[n][n])
   }
   return 0;
 }
+// cheks if number at the same column are equals.
 int verifyCol(int n, int mat[n][n])
 {
   int i, j, valid = 0;
@@ -234,6 +246,7 @@ int verifyCol(int n, int mat[n][n])
   }
   return 0;
 }
+// check if numbers at main diagonal are equals.
 int verifyMainDiagonal(int n, int mat[n][n])
 {
   int i, valid = 0;
@@ -257,6 +270,7 @@ int verifyMainDiagonal(int n, int mat[n][n])
 
   return 0;
 }
+// Checks if number at side diagonal are equals.
 int verifySideDiagonal(int n, int mat[n][n])
 {
 
